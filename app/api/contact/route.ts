@@ -100,13 +100,15 @@ export async function POST(request: Request) {
       { success: true, message: "Email sent successfully" },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error sending email:", error);
+    const errorMessage =
+      error instanceof Error ? error.message : "An unknown error occurred";
     return NextResponse.json(
       {
         error:
           "Error al enviar el mensaje. Por favor intente nuevamente más tarde.",
-        details: error.message,
+        details: errorMessage,
       },
       { status: 500 }
     );

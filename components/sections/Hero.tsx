@@ -21,7 +21,10 @@ export default function Hero() {
 
       // Event listeners
       const handleLoadedData = () => setIsVideoLoaded(true);
-      const handleError = (e: any) => console.error("Video error:", e);
+      const handleError = (e: Event) => {
+        const target = e.target as HTMLVideoElement;
+        console.error("Video error:", target.error);
+      };
 
       video.addEventListener("loadeddata", handleLoadedData);
       video.addEventListener("error", handleError);

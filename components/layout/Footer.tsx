@@ -14,6 +14,8 @@ import {
   NAV_ITEMS,
 } from "@/lib/constants";
 
+type SocialPlatform = "facebook" | "instagram" | "whatsapp" | "youtube";
+
 export default function Footer() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -83,7 +85,10 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <BrandIcon brand={platform as any} className="w-6 h-6" />
+                    <BrandIcon
+                      brand={platform as SocialPlatform}
+                      className="w-6 h-6"
+                    />
                   </Link>
                 ))}
             </div>
