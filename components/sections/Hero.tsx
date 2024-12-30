@@ -10,44 +10,56 @@ import Image from "next/image";
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [videoError, setVideoError] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
+    if (!video) return;
 
-    if (video) {
-      // Reset video source and load
-      video.src = "/videos/intro.mp4";
-      video.load();
+    const handleLoadedData = () => {
+      console.log("Video loaded successfully");
+      setIsVideoLoaded(true);
+      setVideoError(false);
+    };
 
-      // Event listeners
-      const handleLoadedData = () => setIsVideoLoaded(true);
-      const handleError = (e: Event) => {
-        const target = e.target as HTMLVideoElement;
-        console.error("Video error:", target.error);
-      };
+    const handleError = (e: Event) => {
+      const target = e.target as HTMLVideoElement;
+      console.error("Video loading error:", target.error);
+      setVideoError(true);
+      setIsVideoLoaded(false);
+    };
 
-      video.addEventListener("loadeddata", handleLoadedData);
-      video.addEventListener("error", handleError);
+    // Add event listeners
+    video.addEventListener("loadeddata", handleLoadedData);
+    video.addEventListener("error", handleError);
 
-      // Start playing
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise.catch((error) => {
-          console.error("Video play failed:", error);
-        });
+    // Set video attributes
+    video.preload = "auto";
+    video.muted = true;
+    video.playsInline = true;
+    video.loop = true;
+
+    // Handle video playback
+    const playVideo = async () => {
+      try {
+        await video.play();
+      } catch (error) {
+        console.error("Video play failed:", error);
+        setVideoError(true);
       }
+    };
 
-      // Cleanup function
-      return () => {
-        video.removeEventListener("loadeddata", handleLoadedData);
-        video.removeEventListener("error", handleError);
-        video.pause();
-        video.src = "";
-        video.load();
-        setIsVideoLoaded(false);
-      };
-    }
-  }, []); // Empty dependency array to run only on mount
+    playVideo();
+
+    // Cleanup
+    return () => {
+      video.removeEventListener("loadeddata", handleLoadedData);
+      video.removeEventListener("error", handleError);
+      video.pause();
+      video.removeAttribute("src");
+      video.load();
+    };
+  }, []);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -63,21 +75,40 @@ export default function Hero() {
     >
       {/* Video Background with Enhanced Overlays */}
       <div className="absolute inset-0 w-full h-full">
-        {/* Loading State */}
+        {/* Loading/Error State with Fallback Background */}
         <div
           className={`absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-800 transition-opacity duration-1000 z-[5] ${
-            isVideoLoaded ? "opacity-0" : "opacity-100"
+            isVideoLoaded && !videoError ? "opacity-0" : "opacity-100"
           }`}
-        />
+        >
+          {/* Optional: Add a fallback image here */}
+          {videoError && (
+            <Image
+              src="/images/fallback-bg.jpg"
+              alt="Background"
+              fill
+              className="object-cover opacity-50"
+              priority
+            />
+          )}
+        </div>
 
-        {/* Video */}
+        {/* Video with Multiple Sources */}
         <video
           ref={videoRef}
           playsInline
           muted
           loop
           className="absolute inset-0 w-full h-full object-cover"
-        />
+          onContextMenu={(e) => e.preventDefault()}
+        >
+          <source src="/videos/intro.webm" type="video/webm" />
+          <source
+            src="/videos/intro.mp4"
+            type="video/mp4; codecs=avc1.42E01E,mp4a.40.2"
+          />
+          {/* You can add more source formats if needed */}
+        </video>
 
         {/* Enhanced Overlays */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/90 z-10" />
@@ -191,7 +222,7 @@ export default function Hero() {
         </div>
       </Container>
 
-      {/* Enhanced Scroll Indicator */}
+      {/* Scroll Indicator */}
       <motion.div
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-40"
         initial={{ opacity: 0 }}
