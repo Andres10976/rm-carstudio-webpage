@@ -2,6 +2,68 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Trajan Pro Fonts */
+@font-face {
+  font-family: "TrajanPro-Regular";
+  src: url("https://db.onlinewebfonts.com/t/c07d5c6528b6cc0eac08afd7a3199657.eot");
+  src: url("https://db.onlinewebfonts.com/t/c07d5c6528b6cc0eac08afd7a3199657.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/c07d5c6528b6cc0eac08afd7a3199657.woff2")
+      format("woff2"),
+    url("https://db.onlinewebfonts.com/t/c07d5c6528b6cc0eac08afd7a3199657.woff")
+      format("woff"),
+    url("https://db.onlinewebfonts.com/t/c07d5c6528b6cc0eac08afd7a3199657.ttf")
+      format("truetype"),
+    url("https://db.onlinewebfonts.com/t/c07d5c6528b6cc0eac08afd7a3199657.svg#TrajanPro-Regular")
+      format("svg");
+}
+
+@font-face {
+  font-family: "Trajan Pro Bold";
+  src: url("https://db.onlinewebfonts.com/t/12d2fa3dcf227b9538084a6bcfeafcf0.eot");
+  src: url("https://db.onlinewebfonts.com/t/12d2fa3dcf227b9538084a6bcfeafcf0.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/12d2fa3dcf227b9538084a6bcfeafcf0.woff2")
+      format("woff2"),
+    url("https://db.onlinewebfonts.com/t/12d2fa3dcf227b9538084a6bcfeafcf0.woff")
+      format("woff"),
+    url("https://db.onlinewebfonts.com/t/12d2fa3dcf227b9538084a6bcfeafcf0.ttf")
+      format("truetype"),
+    url("https://db.onlinewebfonts.com/t/12d2fa3dcf227b9538084a6bcfeafcf0.svg#Trajan Pro Bold")
+      format("svg");
+}
+
+/* Comfortaa Fonts */
+@font-face {
+  font-family: "Comfortaa Regular";
+  src: url("https://db.onlinewebfonts.com/t/2399cc27c387c2d15426ad977462df87.eot");
+  src: url("https://db.onlinewebfonts.com/t/2399cc27c387c2d15426ad977462df87.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/2399cc27c387c2d15426ad977462df87.woff2")
+      format("woff2"),
+    url("https://db.onlinewebfonts.com/t/2399cc27c387c2d15426ad977462df87.woff")
+      format("woff"),
+    url("https://db.onlinewebfonts.com/t/2399cc27c387c2d15426ad977462df87.ttf")
+      format("truetype"),
+    url("https://db.onlinewebfonts.com/t/2399cc27c387c2d15426ad977462df87.svg#Comfortaa Regular")
+      format("svg");
+}
+
+@font-face {
+  font-family: "Comfortaa Bold V2";
+  src: url("https://db.onlinewebfonts.com/t/70f9644542515286487b2b268beffbf8.eot");
+  src: url("https://db.onlinewebfonts.com/t/70f9644542515286487b2b268beffbf8.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/70f9644542515286487b2b268beffbf8.woff2")
+      format("woff2"),
+    url("https://db.onlinewebfonts.com/t/70f9644542515286487b2b268beffbf8.woff")
+      format("woff"),
+    url("https://db.onlinewebfonts.com/t/70f9644542515286487b2b268beffbf8.ttf")
+      format("truetype"),
+    url("https://db.onlinewebfonts.com/t/70f9644542515286487b2b268beffbf8.svg#Comfortaa Bold V2")
+      format("svg");
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -17,5 +79,14 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Comfortaa Regular", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "TrajanPro-Regular", serif;
 }
