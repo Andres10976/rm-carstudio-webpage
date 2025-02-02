@@ -4,7 +4,6 @@ import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Container } from "../ui/Container";
-import { Button } from "../ui/Button";
 
 const AboutSection = () => {
   const milestones = [
