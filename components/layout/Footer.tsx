@@ -76,7 +76,7 @@ export default function Footer() {
             </p>
             <div className="flex space-x-6">
               {Object.entries(SOCIAL_LINKS)
-                .slice(0, 3)
+                .slice(0, 4)
                 .map(([platform, url]) => (
                   <Link
                     key={platform}

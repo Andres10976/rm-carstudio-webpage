@@ -15,9 +15,10 @@ export const CALENDLY_LINK = "https://calendly.com/rmcarstudio";
 
 export const NAV_ITEMS = [
   { name: "Inicio", href: "#inicio" },
+  { name: "Servicios", href: "#servicios" },
   { name: "Recubrimiento de cerámico", href: "#ceramic-coating" },
   { name: "PPF", href: "#ppf" },
-  { name: "Servicios", href: "#servicios" },
-  { name: "Galería", href: "#galeria" },
-  { name: "Contacto", href: "#contacto" },
+  { name: "Lavado Premium", href: "#premium-wash" },
+  { name: "Galería", href: "#video-gallery" },
+  { name: "Contacto", href: "#contact" },
 ];

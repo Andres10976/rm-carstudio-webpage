@@ -81,10 +81,6 @@ const AboutSection = () => {
                 </motion.div>
               ))}
             </div>
-
-            <Button className="bg-primary-gold text-black hover:bg-primary-gold/90 transform hover:scale-105 transition-all duration-300">
-              Conocer Más
-            </Button>
           </motion.div>
 
           {/* Right side - Image and Certifications */}

@@ -5,6 +5,7 @@ import ServicesSection from "@/components/sections/ServicesSection";
 import VideoGallery from "@/components/sections/VideoGallery";
 import ContactSection from "@/components/sections/ContactSection";
 import AboutSection from "@/components/sections/AboutUs";
+import ServicePreview from "@/components/sections/ServicePreview";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       <main>
         <Hero />
         <AboutSection />
+        <ServicePreview />
         <ServicesSection />
         <VideoGallery />
         <ContactSection />
