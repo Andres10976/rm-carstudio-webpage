@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Shield, Car, SprayCan, Check, CreditCard } from "lucide-react";
 import { Container } from "../ui/Container";
 import { Button } from "../ui/Button";
+import { SOCIAL_LINKS } from "@/lib/constants";
 
 const ServicesSection = () => {
   const services = [
@@ -27,7 +28,6 @@ const ServicesSection = () => {
         {
           name: "Protección 3 Años",
           price: "$590",
-          cashPrice: "$490",
           features: [
             "Protección básica",
             "Ideal para vehículos diarios",
@@ -37,7 +37,6 @@ const ServicesSection = () => {
         {
           name: "Protección 5 Años",
           price: "$790",
-          cashPrice: "$690",
           features: [
             "Protección media",
             "Tecnología mejorada",
@@ -47,7 +46,6 @@ const ServicesSection = () => {
         {
           name: "Protección 9 Años",
           price: "$1200",
-          cashPrice: "$1000",
           features: [
             "Máxima protección",
             "Tecnología premium",
@@ -96,9 +94,8 @@ const ServicesSection = () => {
       ],
       pricing: {
         regular: "₡18,000",
-        ceramic: "₡14,000",
       },
-      showRestrictions: false,
+      showRestrictions: true,
       showFinancing: false,
     },
   ];
@@ -119,7 +116,7 @@ const ServicesSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="grid lg:grid-cols-2 gap-12 items-center"
+              className="flex flex-col max-w-4xl mx-auto gap-12"
             >
               <div className="space-y-8">
                 <div className="flex items-center gap-4">
@@ -169,17 +166,6 @@ const ServicesSection = () => {
                               <p className="text-primary-gold text-xl font-bold">
                                 {pkg.price}
                               </p>
-                              <p className="text-gray-400 text-xs">
-                                Precio regular
-                              </p>
-                            </div>
-                            <div className="text-center">
-                              <p className="text-green-400 text-xl font-bold">
-                                {pkg.cashPrice}
-                              </p>
-                              <p className="text-gray-400 text-xs whitespace-nowrap">
-                                Efectivo/Transferencia
-                              </p>
                             </div>
                           </div>
                           <ul className="space-y-2">
@@ -213,21 +199,12 @@ const ServicesSection = () => {
                 {service.pricing && (
                   <div className="bg-white/5 p-6 rounded-lg border border-gray-800">
                     <h3 className="font-trajan text-2xl text-white mb-4">
-                      Tarifas
+                      Precio
                     </h3>
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
-                        <span className="text-gray-300">Tarifa Regular</span>
-                        <span className="text-primary-gold text-xl">
+                        <span className="text-primary-gold text-2xl">
                           {service.pricing.regular}
-                        </span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-gray-300">
-                          Con Recubrimiento cerámico RM
-                        </span>
-                        <span className="text-primary-gold text-xl">
-                          {service.pricing.ceramic}
                         </span>
                       </div>
                     </div>
@@ -236,8 +213,7 @@ const ServicesSection = () => {
 
                 {service.showRestrictions && (
                   <p className="text-gray-400 text-sm">
-                    * Aplican restricciones según tamaño excepcional del
-                    vehículo
+                    * Precio sujeto a cambios.
                   </p>
                 )}
 
@@ -251,7 +227,10 @@ const ServicesSection = () => {
                 )}
 
                 <div className="flex gap-4">
-                  <Button className="bg-primary-gold text-black hover:bg-primary-gold/90">
+                  <Button
+                    className="bg-primary-gold text-black hover:bg-primary-gold/90"
+                    onClick={() => window.open(SOCIAL_LINKS.whatsapp, "_blank")}
+                  >
                     Cotizar Ahora
                   </Button>
                 </div>

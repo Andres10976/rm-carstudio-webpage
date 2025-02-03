@@ -6,6 +6,7 @@ import { ChevronDown } from "lucide-react";
 import { Container } from "../ui/Container";
 import { Button } from "../ui/Button";
 import Image from "next/image";
+import { SOCIAL_LINKS } from "@/lib/constants";
 
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -206,7 +207,7 @@ export default function Hero() {
             <Button
               size="lg"
               className="bg-primary-gold text-black hover:bg-primary-gold/90 px-8 py-4 transform hover:scale-105 transition-all duration-300"
-              onClick={() => scrollToSection("contacto")}
+              onClick={() => window.open(SOCIAL_LINKS.whatsapp, "_blank")}
             >
               Cotizar Ahora
             </Button>

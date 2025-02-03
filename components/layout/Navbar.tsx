@@ -7,6 +7,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { NAV_ITEMS } from "@/lib/constants";
 import { Button } from "../ui/Button";
+import { SOCIAL_LINKS } from "@/lib/constants";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -68,6 +69,7 @@ export default function Navbar() {
             <Button
               size="sm"
               className="bg-primary-gold text-black hover:bg-primary-gold/90 transition-all duration-300 transform hover:scale-105"
+              onClick={() => window.open(SOCIAL_LINKS.whatsapp, "_blank")}
             >
               Cotizar
             </Button>
