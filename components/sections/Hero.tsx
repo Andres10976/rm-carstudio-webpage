@@ -215,7 +215,7 @@ export default function Hero() {
               variant="secondary"
               size="lg"
               className="border-2 border-white text-white hover:bg-white/10 px-8 py-4 transform hover:scale-105 transition-all duration-300"
-              onClick={() => scrollToSection("servicios")}
+              onClick={() => scrollToSection("service-preview")}
             >
               Nuestros Servicios
             </Button>

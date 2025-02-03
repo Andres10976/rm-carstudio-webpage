@@ -35,7 +35,10 @@ const ServicePreview = () => {
   ];
 
   return (
-    <section className="py-24 bg-black relative overflow-hidden">
+    <section
+      id="service-preview"
+      className="py-24 bg-black relative overflow-hidden"
+    >
       {/* Background Elements */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(247,208,70,0.05)_0%,rgba(0,0,0,0)_70%)]" />
 
