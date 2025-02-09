@@ -231,7 +231,8 @@ const ServicesSection = () => {
                   <div className="flex items-center gap-4 bg-white/5 p-4 rounded-lg">
                     <CreditCard className="w-6 h-6 text-primary-gold" />
                     <p className="text-gray-300">
-                      Disponible financiamiento a 6 meses sin intereses
+                      Disponible financiamiento a taza cero por 6 meses con el
+                      BAC
                     </p>
                   </div>
                 )}

@@ -25,6 +25,11 @@ const AboutSection = () => {
       description:
         "Especialización en sistemas avanzados de protección de pintura",
     },
+    {
+      year: "2023",
+      title: "Certificación IDA",
+      description: "Certificados en la asociación internacional de detallado",
+    },
   ];
 
   return (
@@ -110,21 +115,31 @@ const AboutSection = () => {
               <h4 className="font-trajan text-lg text-white mb-4 text-center">
                 Certificaciones Internacionales
               </h4>
-              <div className="flex justify-center items-center gap-8">
-                <Image
-                  src="/images/gtechniq-certified.png"
-                  alt="Gtechniq Certified"
-                  width={140}
-                  height={70}
-                  className="object-contain"
-                />
-                <Image
-                  src="/images/Stek_Certified.png"
-                  alt="Stek Certified"
-                  width={140}
-                  height={70}
-                  className="object-contain"
-                />
+              <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-8">
+                <div className="w-24 sm:w-32 h-12 sm:h-16 relative">
+                  <Image
+                    src="/images/gtechniq-certified.png"
+                    alt="Gtechniq Certified"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+                <div className="w-24 sm:w-32 h-12 sm:h-16 relative">
+                  <Image
+                    src="/images/Stek_Certified.png"
+                    alt="Stek Certified"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+                <div className="w-24 sm:w-32 h-12 sm:h-16 relative">
+                  <Image
+                    src="/images/IDA-cert.png"
+                    alt="IDA Certified"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
               </div>
             </motion.div>
           </motion.div>

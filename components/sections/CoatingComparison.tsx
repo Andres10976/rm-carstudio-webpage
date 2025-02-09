@@ -18,7 +18,7 @@ const CoatingComparison = () => {
     {
       name: "Crystal Serum Ultra",
       image: "/images/CLU.png",
-      duration: "7 años de protección",
+      duration: "9 años de protección",
       guarantee: true,
     },
   ];

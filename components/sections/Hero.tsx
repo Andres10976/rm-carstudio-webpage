@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { Container } from "../ui/Container";
@@ -9,89 +8,6 @@ import Image from "next/image";
 import { SOCIAL_LINKS } from "@/lib/constants";
 
 export default function Hero() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-  const [videoError, setVideoError] = useState(false);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    // Reset states when component mounts
-    setIsVideoLoaded(false);
-    setVideoError(false);
-
-    const handleLoadedData = () => {
-      setIsVideoLoaded(true);
-      setVideoError(false);
-
-      // Attempt to play video after it's loaded
-      video.play().catch((error) => {
-        console.error("Video play failed:", error);
-        setVideoError(true);
-      });
-    };
-
-    const handleError = (e: Event) => {
-      console.error(
-        "Video loading error:",
-        (e.target as HTMLVideoElement).error
-      );
-      setVideoError(true);
-      setIsVideoLoaded(false);
-    };
-
-    // Configure video element
-    video.preload = "auto";
-    video.muted = true;
-    video.playsInline = true;
-    video.loop = true;
-
-    // Set video sources programmatically
-    const sources = [
-      { src: "/videos/intro.webm", type: "video/webm" },
-      {
-        src: "/videos/intro.mp4",
-        type: "video/mp4; codecs=avc1.42E01E,mp4a.40.2",
-      },
-    ];
-
-    // Remove any existing sources
-    while (video.firstChild) {
-      video.removeChild(video.firstChild);
-    }
-
-    // Add new source elements
-    sources.forEach(({ src, type }) => {
-      const source = document.createElement("source");
-      source.src = src;
-      source.type = type;
-      video.appendChild(source);
-    });
-
-    // Add event listeners
-    video.addEventListener("loadeddata", handleLoadedData);
-    video.addEventListener("error", handleError);
-
-    // Load the video
-    video.load();
-
-    return () => {
-      // Cleanup
-      video.removeEventListener("loadeddata", handleLoadedData);
-      video.removeEventListener("error", handleError);
-      if (!video.paused) {
-        video.pause();
-      }
-      // Clear sources
-      while (video.firstChild) {
-        video.removeChild(video.firstChild);
-      }
-      // Reset video element
-      video.load();
-    };
-  }, []); // Empty dependency array since we want this to run only once
-
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -104,33 +20,20 @@ export default function Hero() {
       id="inicio"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Video Background with Enhanced Overlays */}
+      {/* Static Image Background with Overlays */}
       <div className="absolute inset-0 w-full h-full">
-        <div
-          className={`absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-800 transition-opacity duration-1000 z-[5] ${
-            isVideoLoaded && !videoError ? "opacity-0" : "opacity-100"
-          }`}
-        >
-          {videoError && (
-            <Image
-              src="/images/fallback-bg.jpg"
-              alt="Background"
-              fill
-              className="object-cover opacity-50"
-              priority
-            />
-          )}
-        </div>
-
-        <video
-          ref={videoRef}
-          className="absolute inset-0 w-full h-full object-cover"
-          onContextMenu={(e) => e.preventDefault()}
+        <Image
+          src="/images/hero-image.png"
+          alt="Background"
+          fill
+          className="object-cover"
+          priority
         />
 
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/90 z-10" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_0%,rgba(0,0,0,0.8)_100%)] z-20" />
-        <div className="absolute inset-0 bg-black/10 bg-[linear-gradient(45deg,rgba(247,208,70,0.05)_0%,rgba(0,0,0,0)_70%)] z-30" />
+        {/* Overlays */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/90" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_0%,rgba(0,0,0,0.8)_100%)]" />
+        <div className="absolute inset-0 bg-black/10 bg-[linear-gradient(45deg,rgba(247,208,70,0.05)_0%,rgba(0,0,0,0)_70%)]" />
       </div>
 
       {/* Main Content */}
@@ -213,10 +116,8 @@ export default function Hero() {
             Detallado de alto nivel y recubrimiento cerámico profesional
           </motion.p>
 
-          {/* New container for buttons and scroll indicator */}
+          {/* Buttons and scroll indicator container */}
           <div className="flex flex-col gap-12">
-            {" "}
-            {/* Added gap between buttons and scroll indicator */}
             {/* CTA Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -240,9 +141,10 @@ export default function Hero() {
                 Nuestros Servicios
               </Button>
             </motion.div>
+
             {/* Scroll Indicator */}
             <motion.div
-              className="flex justify-center" // Changed from absolute positioning
+              className="flex justify-center"
               initial={{ opacity: 0 }}
               animate={{
                 opacity: [0.4, 1, 0.4],
