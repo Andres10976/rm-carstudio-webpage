@@ -1,5 +1,6 @@
 import React from "react";
 import { Star, StarOff } from "lucide-react";
+import Image from "next/image";
 
 const CoatingComparison = () => {
   const products = [
@@ -84,7 +85,7 @@ const CoatingComparison = () => {
           <div className="col-span-1"></div>
           {products.map((product) => (
             <div key={product.name} className="text-center space-y-4">
-              <img
+              <Image
                 src={product.image}
                 alt={product.name}
                 className="w-32 h-32 mx-auto object-contain"
