@@ -85,11 +85,15 @@ const CoatingComparison = () => {
           <div className="col-span-1"></div>
           {products.map((product) => (
             <div key={product.name} className="text-center space-y-4">
-              <Image
-                src={product.image}
-                alt={product.name}
-                className="w-32 h-32 mx-auto object-contain"
-              />
+              <div className="relative w-32 h-32 mx-auto">
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  width={128}
+                  height={128}
+                  className="object-contain"
+                />
+              </div>
               <h3 className="text-white font-bold">{product.name}</h3>
               <p className="text-gray-300 text-sm">{product.duration}</p>
               {product.guarantee && (
