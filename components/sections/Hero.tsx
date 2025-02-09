@@ -17,50 +17,80 @@ export default function Hero() {
     const video = videoRef.current;
     if (!video) return;
 
+    // Reset states when component mounts
+    setIsVideoLoaded(false);
+    setVideoError(false);
+
     const handleLoadedData = () => {
-      console.log("Video loaded successfully");
       setIsVideoLoaded(true);
       setVideoError(false);
+
+      // Attempt to play video after it's loaded
+      video.play().catch((error) => {
+        console.error("Video play failed:", error);
+        setVideoError(true);
+      });
     };
 
     const handleError = (e: Event) => {
-      const target = e.target as HTMLVideoElement;
-      console.error("Video loading error:", target.error);
+      console.error(
+        "Video loading error:",
+        (e.target as HTMLVideoElement).error
+      );
       setVideoError(true);
       setIsVideoLoaded(false);
     };
 
-    // Add event listeners
-    video.addEventListener("loadeddata", handleLoadedData);
-    video.addEventListener("error", handleError);
-
-    // Set video attributes
+    // Configure video element
     video.preload = "auto";
     video.muted = true;
     video.playsInline = true;
     video.loop = true;
 
-    // Handle video playback
-    const playVideo = async () => {
-      try {
-        await video.play();
-      } catch (error) {
-        console.error("Video play failed:", error);
-        setVideoError(true);
-      }
-    };
+    // Set video sources programmatically
+    const sources = [
+      { src: "/videos/intro.webm", type: "video/webm" },
+      {
+        src: "/videos/intro.mp4",
+        type: "video/mp4; codecs=avc1.42E01E,mp4a.40.2",
+      },
+    ];
 
-    playVideo();
+    // Remove any existing sources
+    while (video.firstChild) {
+      video.removeChild(video.firstChild);
+    }
 
-    // Cleanup
+    // Add new source elements
+    sources.forEach(({ src, type }) => {
+      const source = document.createElement("source");
+      source.src = src;
+      source.type = type;
+      video.appendChild(source);
+    });
+
+    // Add event listeners
+    video.addEventListener("loadeddata", handleLoadedData);
+    video.addEventListener("error", handleError);
+
+    // Load the video
+    video.load();
+
     return () => {
+      // Cleanup
       video.removeEventListener("loadeddata", handleLoadedData);
       video.removeEventListener("error", handleError);
-      video.pause();
-      video.removeAttribute("src");
+      if (!video.paused) {
+        video.pause();
+      }
+      // Clear sources
+      while (video.firstChild) {
+        video.removeChild(video.firstChild);
+      }
+      // Reset video element
       video.load();
     };
-  }, []);
+  }, []); // Empty dependency array since we want this to run only once
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -76,13 +106,11 @@ export default function Hero() {
     >
       {/* Video Background with Enhanced Overlays */}
       <div className="absolute inset-0 w-full h-full">
-        {/* Loading/Error State with Fallback Background */}
         <div
           className={`absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-800 transition-opacity duration-1000 z-[5] ${
             isVideoLoaded && !videoError ? "opacity-0" : "opacity-100"
           }`}
         >
-          {/* Optional: Add a fallback image here */}
           {videoError && (
             <Image
               src="/images/fallback-bg.jpg"
@@ -94,24 +122,12 @@ export default function Hero() {
           )}
         </div>
 
-        {/* Video with Multiple Sources */}
         <video
           ref={videoRef}
-          playsInline
-          muted
-          loop
           className="absolute inset-0 w-full h-full object-cover"
           onContextMenu={(e) => e.preventDefault()}
-        >
-          <source src="/videos/intro.webm" type="video/webm" />
-          <source
-            src="/videos/intro.mp4"
-            type="video/mp4; codecs=avc1.42E01E,mp4a.40.2"
-          />
-          {/* You can add more source formats if needed */}
-        </video>
+        />
 
-        {/* Enhanced Overlays */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/90 z-10" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_0%,rgba(0,0,0,0.8)_100%)] z-20" />
         <div className="absolute inset-0 bg-black/10 bg-[linear-gradient(45deg,rgba(247,208,70,0.05)_0%,rgba(0,0,0,0)_70%)] z-30" />
@@ -197,50 +213,54 @@ export default function Hero() {
             Detallado de alto nivel y recubrimiento cerámico profesional
           </motion.p>
 
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.2 }}
-            className="flex flex-col sm:flex-row gap-6 justify-center"
-          >
-            <Button
-              size="lg"
-              className="bg-primary-gold text-black hover:bg-primary-gold/90 px-8 py-4 transform hover:scale-105 transition-all duration-300"
-              onClick={() => window.open(SOCIAL_LINKS.whatsapp, "_blank")}
+          {/* New container for buttons and scroll indicator */}
+          <div className="flex flex-col gap-12">
+            {" "}
+            {/* Added gap between buttons and scroll indicator */}
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.2 }}
+              className="flex flex-col sm:flex-row gap-6 justify-center"
             >
-              Cotizar Ahora
-            </Button>
-            <Button
-              variant="secondary"
-              size="lg"
-              className="border-2 border-white text-white hover:bg-white/10 px-8 py-4 transform hover:scale-105 transition-all duration-300"
-              onClick={() => scrollToSection("service-preview")}
+              <Button
+                size="lg"
+                className="bg-primary-gold text-black hover:bg-primary-gold/90 px-8 py-4 transform hover:scale-105 transition-all duration-300"
+                onClick={() => window.open(SOCIAL_LINKS.whatsapp, "_blank")}
+              >
+                Cotizar Ahora
+              </Button>
+              <Button
+                variant="secondary"
+                size="lg"
+                className="border-2 border-white text-white hover:bg-white/10 px-8 py-4 transform hover:scale-105 transition-all duration-300"
+                onClick={() => scrollToSection("service-preview")}
+              >
+                Nuestros Servicios
+              </Button>
+            </motion.div>
+            {/* Scroll Indicator */}
+            <motion.div
+              className="flex justify-center" // Changed from absolute positioning
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: [0.4, 1, 0.4],
+                y: [0, 10, 0],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                repeatType: "reverse",
+              }}
+              onClick={() => scrollToSection("servicios")}
+              style={{ cursor: "pointer" }}
             >
-              Nuestros Servicios
-            </Button>
-          </motion.div>
+              <ChevronDown className="w-8 h-8 text-primary-gold" />
+            </motion.div>
+          </div>
         </div>
       </Container>
-
-      {/* Scroll Indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-40"
-        initial={{ opacity: 0 }}
-        animate={{
-          opacity: [0.4, 1, 0.4],
-          y: [0, 10, 0],
-        }}
-        transition={{
-          duration: 2,
-          repeat: Infinity,
-          repeatType: "reverse",
-        }}
-        onClick={() => scrollToSection("servicios")}
-        style={{ cursor: "pointer" }}
-      >
-        <ChevronDown className="w-8 h-8 text-primary-gold" />
-      </motion.div>
     </section>
   );
 }

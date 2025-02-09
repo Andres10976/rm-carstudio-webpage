@@ -90,3 +90,7 @@ h5,
 h6 {
   font-family: "TrajanPro-Regular", serif;
 }
+
+html {
+  scroll-behavior: smooth;
+}
