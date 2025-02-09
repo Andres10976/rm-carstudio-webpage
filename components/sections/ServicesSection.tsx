@@ -6,6 +6,7 @@ import { Shield, Car, SprayCan, Check, CreditCard } from "lucide-react";
 import { Container } from "../ui/Container";
 import { Button } from "../ui/Button";
 import { SOCIAL_LINKS } from "@/lib/constants";
+import CoatingComparison from "./CoatingComparison";
 
 const ServicesSection = () => {
   const services = [
@@ -215,6 +216,15 @@ const ServicesSection = () => {
                   <p className="text-gray-400 text-sm">
                     * Precio sujeto a cambios.
                   </p>
+                )}
+
+                {service.id === "ceramic-coating" && (
+                  <div className="mt-12">
+                    <h3 className="font-trajan text-2xl text-white mb-6">
+                      Comparación de Recubrimientos
+                    </h3>
+                    <CoatingComparison />
+                  </div>
                 )}
 
                 {service.showFinancing && (
