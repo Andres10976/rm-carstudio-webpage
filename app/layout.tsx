@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { WhatsAppBubble } from "@/components/ui/WhatsAppBubble";
+import { NavbarProvider } from "@/lib/navbar-context";
 
 export const metadata: Metadata = {
   title: "RM Car Studio | Detallado Automotriz Profesional",
@@ -34,8 +35,10 @@ export default function RootLayout({
         />
       </head>
       <body className="font-comfortaa">
-        {children}
-        <WhatsAppBubble />
+        <NavbarProvider>
+          {children}
+          <WhatsAppBubble />
+        </NavbarProvider>
       </body>
     </html>
   );

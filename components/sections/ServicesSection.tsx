@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Shield, Car, SprayCan, Check, CreditCard } from "lucide-react";
 import { Container } from "../ui/Container";
 import { Button } from "../ui/Button";
-import { SOCIAL_LINKS } from "@/lib/constants";
+import { SOCIAL_LINKS, CALENDLY_LINK } from "@/lib/constants";
 import CoatingComparison from "./CoatingComparison";
 
 const ServicesSection = () => {
@@ -56,6 +56,7 @@ const ServicesSection = () => {
       ],
       showRestrictions: true,
       showFinancing: true,
+      buttonType: "schedule",
     },
     {
       id: "ppf",
@@ -75,6 +76,7 @@ const ServicesSection = () => {
       priceInfo: "Empiezan desde $200 por pieza",
       showRestrictions: true,
       showFinancing: true,
+      buttonType: "quote",
     },
     {
       id: "premium-wash",
@@ -98,8 +100,25 @@ const ServicesSection = () => {
       },
       showRestrictions: true,
       showFinancing: false,
+      buttonType: "schedule",
     },
   ];
+
+  const getButtonConfig = (buttonType: string) => {
+    switch (buttonType) {
+      case "schedule":
+        return {
+          text: "Agendar Ahora",
+          onClick: () => window.open(CALENDLY_LINK, "_blank"),
+        };
+      case "quote":
+      default:
+        return {
+          text: "Cotizar Ahora",
+          onClick: () => window.open(SOCIAL_LINKS.whatsapp, "_blank"),
+        };
+    }
+  };
 
   return (
     <section id="servicios" className="bg-black relative">
@@ -240,9 +259,9 @@ const ServicesSection = () => {
                 <div className="flex gap-4">
                   <Button
                     className="bg-primary-gold text-black hover:bg-primary-gold/90"
-                    onClick={() => window.open(SOCIAL_LINKS.whatsapp, "_blank")}
+                    onClick={getButtonConfig(service.buttonType).onClick}
                   >
-                    Cotizar Ahora
+                    {getButtonConfig(service.buttonType).text}
                   </Button>
                 </div>
               </div>
