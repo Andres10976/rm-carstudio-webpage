@@ -35,27 +35,27 @@ const CoatingComparison = () => {
     },
     {
       name: "Brillo",
-      ratings: [4, 5, 5],
+      ratings: [4, 4, 5],
     },
     {
       name: "Profundidad de brillo",
-      ratings: [4, 5, 5],
+      ratings: [4, 4, 5],
     },
     {
       name: "Resistencia a rayones",
-      ratings: [5, 5, 5],
+      ratings: [5, 4, 5],
     },
     {
       name: "Repelencia agua/suciedad",
-      ratings: [2, 5, 5],
+      ratings: [2, 4, 5],
     },
     {
       name: "Resistencia química",
-      ratings: [5, 5, 5],
+      ratings: [5, 4, 5],
     },
     {
       name: "Resistencia UV",
-      ratings: [4, 5, 5],
+      ratings: [4, 4, 5],
     },
   ];
 
