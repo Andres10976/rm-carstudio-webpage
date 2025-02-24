@@ -1,6 +1,6 @@
 # RM Car Studio Website
 
-A modern, responsive website for a professional car detailing service built with Next.js 15, React 19, and TypeScript. The site features smooth animations, dynamic content loading, and a clean, professional design focused on showcasing premium automotive services. You can see the webpage [HERE](https://vercel.com/andres10976s-projects/rm-carstudio-v2)! (The domain is to be implemented because at the moment the client still haven't finished certain internal criterias for deployment)
+A modern, responsive website for a professional car detailing service built with Next.js 15, React 19, and TypeScript. The site features smooth animations, dynamic content loading, and a clean, professional design focused on showcasing premium automotive services. You can see the webpage [HERE!](https://rm-carstudio-v2.vercel.app/) (The domain is to be implemented because at the moment the client still haven't finished certain internal criterias for deployment)
 
 ## 🚀 Features
 
