@@ -1,4 +1,6 @@
+// app/layout.tsx
 import type { Metadata } from "next";
+import Script from "next/script"; // Import the Script component
 import "./globals.css";
 import { WhatsAppBubble } from "@/components/ui/WhatsAppBubble";
 import { NavbarProvider } from "@/lib/navbar-context";
@@ -14,26 +16,30 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const PIXEL_ID = "757186651321955";
+
   return (
     <html lang="es">
       <head>
         <link
-          href="https://db.onlinewebfonts.com/c/c07d5c6528b6cc0eac08afd7a3199657?family=TrajanPro-Regular"
+          href="[https://db.onlinewebfonts.com/c/c07d5c6528b6cc0eac08afd7a3199657?family=TrajanPro-Regular](https://db.onlinewebfonts.com/c/c07d5c6528b6cc0eac08afd7a3199657?family=TrajanPro-Regular)"
           rel="stylesheet"
         />
         <link
-          href="https://db.onlinewebfonts.com/c/12d2fa3dcf227b9538084a6bcfeafcf0?family=Trajan+Pro+Bold"
+          href="[https://db.onlinewebfonts.com/c/12d2fa3dcf227b9538084a6bcfeafcf0?family=Trajan+Pro+Bold](https://db.onlinewebfonts.com/c/12d2fa3dcf227b9538084a6bcfeafcf0?family=Trajan+Pro+Bold)"
           rel="stylesheet"
         />
         <link
-          href="https://db.onlinewebfonts.com/c/2399cc27c387c2d15426ad977462df87?family=Comfortaa+Regular"
+          href="[https://db.onlinewebfonts.com/c/2399cc27c387c2d15426ad977462df87?family=Comfortaa+Regular](https://db.onlinewebfonts.com/c/2399cc27c387c2d15426ad977462df87?family=Comfortaa+Regular)"
           rel="stylesheet"
         />
         <link
-          href="https://db.onlinewebfonts.com/c/70f9644542515286487b2b268beffbf8?family=Comfortaa+Bold+V2"
+          href="[https://db.onlinewebfonts.com/c/70f9644542515286487b2b268beffbf8?family=Comfortaa+Bold+V2](https://db.onlinewebfonts.com/c/70f9644542515286487b2b268beffbf8?family=Comfortaa+Bold+V2)"
           rel="stylesheet"
         />
-        <script
+        <Script
+          id="fb-pixel-base"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               !function(f,b,e,v,n,t,s)
@@ -43,10 +49,18 @@ export default function RootLayout({
               n.queue=[];t=b.createElement(e);t.async=!0;
               t.src=v;s=b.getElementsByTagName(e)[0];
               s.parentNode.insertBefore(t,s)}(window, document,'script',
-              'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', '757186651321955');
-              fbq('track', 'PageView');
+              '[https://connect.facebook.net/en_US/fbevents.js](https://connect.facebook.net/en_US/fbevents.js)');
+              fbq('init', '${PIXEL_ID}');
             `,
+          }}
+        />
+        <Script
+          id="fb-pixel-pagview"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+               fbq('track', 'PageView');
+             `,
           }}
         />
         <noscript>
@@ -54,7 +68,7 @@ export default function RootLayout({
             height="1"
             width="1"
             style={{ display: "none" }}
-            src="https://www.facebook.com/tr?id=757186651321955&ev=PageView&noscript=1"
+            src={`https://www.facebook.com/tr?id=${PIXEL_ID}&ev=PageView&noscript=1`}
             alt="Facebook Marketing"
           />
         </noscript>
