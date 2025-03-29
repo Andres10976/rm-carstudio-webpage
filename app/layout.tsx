@@ -1,6 +1,6 @@
 // app/layout.tsx
 import type { Metadata } from "next";
-import Script from "next/script"; // Import the Script component
+import Script from "next/script";
 import "./globals.css";
 import { WhatsAppBubble } from "@/components/ui/WhatsAppBubble";
 import { NavbarProvider } from "@/lib/navbar-context";
@@ -22,21 +22,22 @@ export default function RootLayout({
     <html lang="es">
       <head>
         <link
-          href="[https://db.onlinewebfonts.com/c/c07d5c6528b6cc0eac08afd7a3199657?family=TrajanPro-Regular](https://db.onlinewebfonts.com/c/c07d5c6528b6cc0eac08afd7a3199657?family=TrajanPro-Regular)"
+          href="https://db.onlinewebfonts.com/c/c07d5c6528b6cc0eac08afd7a3199657?family=TrajanPro-Regular"
           rel="stylesheet"
         />
         <link
-          href="[https://db.onlinewebfonts.com/c/12d2fa3dcf227b9538084a6bcfeafcf0?family=Trajan+Pro+Bold](https://db.onlinewebfonts.com/c/12d2fa3dcf227b9538084a6bcfeafcf0?family=Trajan+Pro+Bold)"
+          href="https://db.onlinewebfonts.com/c/12d2fa3dcf227b9538084a6bcfeafcf0?family=Trajan+Pro+Bold"
           rel="stylesheet"
         />
         <link
-          href="[https://db.onlinewebfonts.com/c/2399cc27c387c2d15426ad977462df87?family=Comfortaa+Regular](https://db.onlinewebfonts.com/c/2399cc27c387c2d15426ad977462df87?family=Comfortaa+Regular)"
+          href="https://db.onlinewebfonts.com/c/2399cc27c387c2d15426ad977462df87?family=Comfortaa+Regular"
           rel="stylesheet"
         />
         <link
-          href="[https://db.onlinewebfonts.com/c/70f9644542515286487b2b268beffbf8?family=Comfortaa+Bold+V2](https://db.onlinewebfonts.com/c/70f9644542515286487b2b268beffbf8?family=Comfortaa+Bold+V2)"
+          href="https://db.onlinewebfonts.com/c/70f9644542515286487b2b268beffbf8?family=Comfortaa+Bold+V2"
           rel="stylesheet"
         />
+        {/* Fixed Meta Pixel Implementation */}
         <Script
           id="fb-pixel-base"
           strategy="afterInteractive"
@@ -49,13 +50,13 @@ export default function RootLayout({
               n.queue=[];t=b.createElement(e);t.async=!0;
               t.src=v;s=b.getElementsByTagName(e)[0];
               s.parentNode.insertBefore(t,s)}(window, document,'script',
-              '[https://connect.facebook.net/en_US/fbevents.js](https://connect.facebook.net/en_US/fbevents.js)');
+              'https://connect.facebook.net/en_US/fbevents.js');
               fbq('init', '${PIXEL_ID}');
             `,
           }}
         />
         <Script
-          id="fb-pixel-pagview"
+          id="fb-pixel-pageview"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
@@ -63,23 +64,22 @@ export default function RootLayout({
              `,
           }}
         />
+      </head>
+      <body className="font-comfortaa">
+        <NavbarProvider>
+          {children}
+          <WhatsAppBubble />
+        </NavbarProvider>
+        {/* No-script Fallback for Meta Pixel */}
         <noscript>
           <img
             height="1"
             width="1"
             style={{ display: "none" }}
             src={`https://www.facebook.com/tr?id=${PIXEL_ID}&ev=PageView&noscript=1`}
-            alt="Facebook Marketing"
+            alt="Facebook Pixel"
           />
         </noscript>
-      </head>
-      <body className="font-comfortaa">
-        {" "}
-        <NavbarProvider>
-          {" "}
-          {children}
-          <WhatsAppBubble />
-        </NavbarProvider>
       </body>
     </html>
   );
