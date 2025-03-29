@@ -6,6 +6,7 @@ import { Container } from "../ui/Container";
 import { Button } from "../ui/Button";
 import Image from "next/image";
 import { SOCIAL_LINKS } from "@/lib/constants";
+import { trackFbqEvent } from "@/lib/utils";
 
 export default function Hero() {
   const scrollToSection = (sectionId: string) => {
@@ -128,7 +129,10 @@ export default function Hero() {
               <Button
                 size="lg"
                 className="bg-primary-gold text-black hover:bg-primary-gold/90 px-8 py-4 transform hover:scale-105 transition-all duration-300"
-                onClick={() => window.open(SOCIAL_LINKS.whatsapp, "_blank")}
+                onClick={() => {
+                  trackFbqEvent("Contact");
+                  window.open(SOCIAL_LINKS.whatsapp, "_blank");
+                }}
               >
                 Cotizar Ahora
               </Button>

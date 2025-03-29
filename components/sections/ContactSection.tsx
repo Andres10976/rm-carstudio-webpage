@@ -21,6 +21,7 @@ import {
   CALENDLY_LINK,
   SOCIAL_LINKS,
 } from "@/lib/constants";
+import { trackFbqEvent } from "@/lib/utils";
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -263,9 +264,10 @@ const ContactSection = () => {
                 <motion.div
                   whileHover={{ x: 10 }}
                   className="flex items-center gap-4 group cursor-pointer"
-                  onClick={() =>
-                    window.open(`tel:${PHONE_NUMBER.replace(/\s/g, "")}`)
-                  }
+                  onClick={() => {
+                    trackFbqEvent("Contact");
+                    window.open(`tel:${PHONE_NUMBER.replace(/\s/g, "")}`);
+                  }}
                 >
                   <div className="bg-primary-gold/10 p-4 rounded-lg group-hover:bg-primary-gold/20 transition-colors">
                     <Phone className="w-6 h-6 text-primary-gold" />
@@ -281,7 +283,10 @@ const ContactSection = () => {
                 <motion.div
                   whileHover={{ x: 10 }}
                   className="flex items-center gap-4 group cursor-pointer"
-                  onClick={() => window.open(`mailto:${EMAIL}`)}
+                  onClick={() => {
+                    trackFbqEvent("Contact");
+                    window.open(`mailto:${EMAIL}`);
+                  }}
                 >
                   <div className="bg-primary-gold/10 p-4 rounded-lg group-hover:bg-primary-gold/20 transition-colors">
                     <Mail className="w-6 h-6 text-primary-gold" />
@@ -325,7 +330,10 @@ const ContactSection = () => {
                 calendario en línea.
               </p>
               <Button
-                onClick={() => window.open(CALENDLY_LINK, "_blank")}
+                onClick={() => {
+                  trackFbqEvent("Schedule");
+                  window.open(CALENDLY_LINK, "_blank");
+                }}
                 className="w-full bg-black/50 text-white border-2 border-primary-gold hover:bg-primary-gold hover:text-black transition-all duration-300 group"
               >
                 <span className="flex items-center justify-center">

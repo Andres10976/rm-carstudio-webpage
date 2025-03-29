@@ -7,6 +7,7 @@ import { Container } from "../ui/Container";
 import { Button } from "../ui/Button";
 import { SOCIAL_LINKS, CALENDLY_LINK } from "@/lib/constants";
 import CoatingComparison from "./CoatingComparison";
+import { trackFbqEvent } from "@/lib/utils";
 
 const ServicesSection = () => {
   const services = [
@@ -109,13 +110,19 @@ const ServicesSection = () => {
       case "schedule":
         return {
           text: "Agendar Ahora",
-          onClick: () => window.open(CALENDLY_LINK, "_blank"),
+          onClick: () => {
+            trackFbqEvent("Schedule");
+            window.open(CALENDLY_LINK, "_blank");
+          },
         };
       case "quote":
       default:
         return {
           text: "Cotizar Ahora",
-          onClick: () => window.open(SOCIAL_LINKS.whatsapp, "_blank"),
+          onClick: () => {
+            trackFbqEvent("Contact");
+            window.open(SOCIAL_LINKS.whatsapp, "_blank");
+          },
         };
     }
   };

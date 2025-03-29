@@ -9,6 +9,7 @@ import { NAV_ITEMS } from "@/lib/constants";
 import { Button } from "../ui/Button";
 import { SOCIAL_LINKS, CALENDLY_LINK } from "@/lib/constants";
 import { useNavbarContext } from "@/lib/navbar-context";
+import { trackFbqEvent } from "@/lib/utils";
 
 export default function Navbar() {
   const { isMenuOpen: isOpen, setIsMenuOpen: setIsOpen } = useNavbarContext();
@@ -89,14 +90,20 @@ export default function Navbar() {
                   size="sm"
                   variant="secondary"
                   className="hover:text-primary-gold transition-all duration-300"
-                  onClick={() => window.open(CALENDLY_LINK, "_blank")}
+                  onClick={() => {
+                    trackFbqEvent("Schedule");
+                    window.open(CALENDLY_LINK, "_blank");
+                  }}
                 >
                   Agendar
                 </Button>
                 <Button
                   size="sm"
                   className="bg-primary-gold text-black hover:bg-primary-gold/90 transition-all duration-300 transform hover:scale-105"
-                  onClick={() => window.open(SOCIAL_LINKS.whatsapp, "_blank")}
+                  onClick={() => {
+                    trackFbqEvent("Contact"); // <-- Track Contact (WhatsApp)
+                    window.open(SOCIAL_LINKS.whatsapp, "_blank");
+                  }}
                 >
                   Cotizar
                 </Button>
@@ -151,6 +158,7 @@ export default function Navbar() {
                   <Button
                     className="w-full bg-white/10 text-white hover:bg-white/20 py-4 text-lg"
                     onClick={() => {
+                      trackFbqEvent("Schedule");
                       window.open(CALENDLY_LINK, "_blank");
                       handleLinkClick();
                     }}
@@ -160,6 +168,7 @@ export default function Navbar() {
                   <Button
                     className="w-full bg-primary-gold text-black hover:bg-primary-gold/90 py-4 text-lg"
                     onClick={() => {
+                      trackFbqEvent("Contact");
                       window.open(SOCIAL_LINKS.whatsapp, "_blank");
                       handleLinkClick();
                     }}

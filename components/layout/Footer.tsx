@@ -13,6 +13,7 @@ import {
   SOCIAL_LINKS,
   NAV_ITEMS,
 } from "@/lib/constants";
+import { trackFbqEvent } from "@/lib/utils";
 
 type SocialPlatform = "facebook" | "instagram" | "whatsapp" | "youtube";
 
@@ -84,6 +85,11 @@ export default function Footer() {
                     className="transform hover:scale-110 hover:text-primary-gold transition-all duration-300"
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => {
+                      if (platform === "whatsapp") {
+                        trackFbqEvent("Contact");
+                      }
+                    }}
                   >
                     <BrandIcon
                       brand={platform as SocialPlatform}
@@ -150,6 +156,7 @@ export default function Footer() {
                 <Link
                   href={`tel:${PHONE_NUMBER.replace(/\s/g, "")}`}
                   className="text-gray-400 hover:text-primary-gold transition-colors"
+                  onClick={() => trackFbqEvent("Contact")}
                 >
                   {PHONE_NUMBER}
                 </Link>
@@ -159,6 +166,7 @@ export default function Footer() {
                 <Link
                   href={`mailto:${EMAIL}`}
                   className="text-gray-400 hover:text-primary-gold transition-colors"
+                  onClick={() => trackFbqEvent("Contact")}
                 >
                   {EMAIL}
                 </Link>

@@ -22,3 +22,14 @@ export interface QuoteFormData {
   phone: string;
   message: string;
 }
+
+export const trackFbqEvent = (eventName: string) => {
+  // Check if window and window.fbq are available
+  if (typeof window !== "undefined" && typeof window.fbq === "function") {
+    window.fbq("track", eventName);
+  } else {
+    console.warn(
+      `FBQ function not found when trying to track event: ${eventName}`
+    );
+  }
+};
