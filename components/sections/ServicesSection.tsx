@@ -2,20 +2,50 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Shield, Car, SprayCan, Check, CreditCard } from "lucide-react";
+import {
+  Shield,
+  Car,
+  SprayCan,
+  Check,
+  CreditCard,
+  Clock,
+  Info,
+  Calendar,
+  Sparkles,
+  RefreshCw,
+  Star,
+} from "lucide-react";
 import { Container } from "../ui/Container";
 import { Button } from "../ui/Button";
-import { SOCIAL_LINKS, CALENDLY_LINK } from "@/lib/constants";
+import { SOCIAL_LINKS } from "@/lib/constants";
 import CoatingComparison from "./CoatingComparison";
 import { trackFbqEvent } from "@/lib/utils";
+
+declare global {
+  interface Window {
+    Calendly?: {
+      initPopupWidget: (options: { url: string }) => void;
+    };
+  }
+}
+
+interface ServicePricing {
+  regular: string;
+  bundle?: {
+    title: string;
+    price: string;
+    saving: string;
+  };
+}
 
 const ServicesSection = () => {
   const services = [
     {
       id: "ceramic-coating",
       icon: <SprayCan className="w-8 h-8" />,
-      title: "RECUBRIMIENTO CERÁMICO",
+      title: "RECUBRIMIENTO DE CERÁMICO",
       tagline: "Protección Premium para su Vehículo",
+      duration: "1 día y medio",
       description:
         "Nuestro recubrimiento cerámico profesional ofrece una protección incomparable y un brillo excepcional que transforma la apariencia de su vehículo.",
       features: [
@@ -55,15 +85,78 @@ const ServicesSection = () => {
           ],
         },
       ],
-      showRestrictions: true,
+      restrictionsMessage: "* Precio sujeto a cambios.",
       showFinancing: true,
+      buttonType: "quote",
+      calendlyLink: null,
+      pricing: null,
+      priceInfo: null,
+    },
+    {
+      id: "premium-wash",
+      icon: <Car className="w-8 h-8" />,
+      title: "LAVADO DETALLADO PREMIUM",
+      tagline: "Cuidado Excepcional para su Vehículo",
+      duration: "3 a 4 horas",
+      description:
+        "Servicio de lavado detallado que va más allá de la limpieza convencional, utilizando productos premium y técnicas especializadas.",
+      features: [
+        "Proceso certificado anti-microrayas",
+        "Productos premium importados",
+        "Secado con aire filtrado",
+        "Limpieza de rines detallada",
+        "Aspirado profundo",
+        "Limpieza de vidrios especializada",
+        "Lavado de chasis (₡10,000 adicionales)",
+        "Lavado de motor (₡10,000 adicionales)",
+      ],
+      pricing: {
+        regular: "₡18,000",
+        bundle: {
+          title: "Paquete Completo (Lavado + Chasis + Motor)",
+          price: "₡33,000",
+          saving: "¡Ahorre ₡5,000!",
+        },
+      } as ServicePricing,
+      restrictionsMessage: "Descuentos especiales aplican para clientes RM.",
+      showFinancing: false,
       buttonType: "schedule",
+      calendlyLink: "https://calendly.com/rmcarstudio/lavado-premium",
+      packages: null,
+      priceInfo: null,
+    },
+    {
+      id: "ceramic-maintenance",
+      icon: <RefreshCw className="w-8 h-8" />,
+      title: "MANTENIMIENTO DE CERÁMICO",
+      tagline: "Mantenga su Protección al Máximo Rendimiento",
+      duration: "2 a 3 horas",
+      description:
+        "Servicio esencial para clientes con recubrimiento cerámico. Evaluamos el estado de la protección, realizamos una limpieza profunda y aplicamos un refuerzo para asegurar la máxima durabilidad y rendimiento hidrofóbico.",
+      features: [
+        "Lavado detallado con técnica segura para cerámicos",
+        "Inspección completa del estado del recubrimiento",
+        "Descontaminación química y física si es necesario",
+        "Aplicación de 'booster' o 'top coat' cerámico",
+        "Extiende la vida útil y efectividad de su protección",
+      ],
+      pricing: {
+        regular: "₡55,000",
+      } as ServicePricing,
+      restrictionsMessage: "Descuentos especiales aplican para clientes RM.",
+      showFinancing: false,
+      buttonType: "schedule",
+      calendlyLink:
+        "https://calendly.com/rmcarstudio/mantenimiento-de-ceramico",
+      packages: null,
+      priceInfo: null,
     },
     {
       id: "ppf",
       icon: <Shield className="w-8 h-8" />,
       title: "PAINT PROTECTION FILM (PPF)",
       tagline: "Protección Física Superior",
+      duration: "Tiempos pueden variar",
       description:
         "Film de protección de pintura de última generación que protege su vehículo contra impactos, rayones y deterioro ambiental.",
       features: [
@@ -75,62 +168,66 @@ const ServicesSection = () => {
         "Personalización disponible",
       ],
       priceInfo: "Empiezan desde $200 por pieza",
-      showRestrictions: true,
+      restrictionsMessage: "* Precio sujeto a cambios.",
       showFinancing: true,
       buttonType: "quote",
+      calendlyLink: null,
+      pricing: null,
+      packages: null,
     },
     {
-      id: "premium-wash",
-      icon: <Car className="w-8 h-8" />,
-      title: "LAVADO PREMIUM",
-      tagline: "Cuidado Excepcional para su Vehículo",
+      id: "polishing-buffing",
+      icon: <Sparkles className="w-8 h-8" />,
+      title: "PULIDO Y ABRILLANTADO",
+      tagline: "Restaure el Brillo Original de su Pintura",
+      duration: "1 día",
       description:
-        "Servicio de lavado detallado que va más allá de la limpieza convencional, utilizando productos premium y técnicas especializadas.",
+        "Devuelva la claridad y el brillo profundo a la pintura de su vehículo. Nuestro proceso de pulido profesional elimina imperfecciones como microrayas, marcas de remolino y oxidación leve.",
       features: [
-        "Proceso certificado anti-microrayas",
-        "Productos premium importados",
-        "Secado con aire filtrado",
-        "Limpieza de rines detallada",
-        "Aspirado profundo",
-        "Limpieza de vidrios especializada",
-        "Lavado de chasis",
-        "Lavado de motor",
+        "Corrección de pintura multi-etapa",
+        "Eliminación de microrayas y defectos leves",
+        "Mejora significativa del brillo y profundidad del color",
+        "Preparación ideal de la superficie antes de aplicar protección",
+        "Realizado por técnicos expertos",
       ],
       pricing: {
-        regular: "₡18,000",
-      },
-      showRestrictions: true,
+        regular: "₡150,000",
+      } as ServicePricing,
+      restrictionsMessage: "* Precio sujeto a cambios.",
       showFinancing: false,
-      buttonType: "schedule",
+      buttonType: "quote",
+      packages: null,
+      priceInfo: null,
     },
   ];
 
-  const getButtonConfig = (buttonType: string) => {
-    switch (buttonType) {
-      case "schedule":
-        return {
-          text: "Agendar Ahora",
-          onClick: () => {
-            trackFbqEvent("Schedule");
-            window.open(CALENDLY_LINK, "_blank");
-          },
-        };
-      case "quote":
-      default:
-        return {
-          text: "Cotizar Ahora",
-          onClick: () => {
-            trackFbqEvent("Contact");
-            window.open(SOCIAL_LINKS.whatsapp, "_blank");
-          },
-        };
+  const openCalendlyPopup = (calendlyLink: string | null) => {
+    if (!calendlyLink) {
+      console.error("No Calendly link provided for this service.");
+      alert(
+        "El enlace para agendar este servicio no está disponible. Por favor contáctenos."
+      );
+      return;
+    }
+
+    if (window.Calendly) {
+      trackFbqEvent("Schedule");
+      const calendlyUrlWithParams = `${calendlyLink}?background_color=0a0a0a&text_color=ffffff&primary_color=f7d046&hide_event_type_details=1&hide_gdpr_banner=1`;
+      window.Calendly.initPopupWidget({ url: calendlyUrlWithParams });
+    } else {
+      console.error("Calendly script not loaded yet.");
+      alert(
+        "El sistema de agendamiento no está listo. Por favor, intente de nuevo en unos segundos o contáctenos directamente."
+      );
     }
   };
 
   return (
     <section id="servicios" className="bg-black relative">
+      {/* Background Gradient */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(247,208,70,0.05)_0%,rgba(0,0,0,0)_70%)]" />
 
+      {/* Map through services */}
       {services.map((service) => (
         <div
           key={service.id}
@@ -145,7 +242,8 @@ const ServicesSection = () => {
               viewport={{ once: true }}
               className="flex flex-col max-w-4xl mx-auto gap-12"
             >
-              <div className="space-y-8">
+              {/* Service Header */}
+              <div className="space-y-4">
                 <div className="flex items-center gap-4">
                   <div className="p-3 bg-primary-gold/10 rounded-full text-primary-gold">
                     {service.icon}
@@ -154,14 +252,26 @@ const ServicesSection = () => {
                     <h2 className="font-trajan text-3xl text-white">
                       {service.title}
                     </h2>
-                    <p className="text-primary-gold mt-2">{service.tagline}</p>
+                    <p className="text-primary-gold mt-1">{service.tagline}</p>
                   </div>
                 </div>
 
+                {/* Display Duration */}
+                {service.duration && (
+                  <div className="flex items-center gap-2 text-gray-400 text-sm ml-16">
+                    <Clock className="w-4 h-4 text-primary-gold" />
+                    <span>Duración estimada: {service.duration}</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Service Details */}
+              <div className="space-y-8">
                 <p className="text-gray-300 text-lg leading-relaxed">
                   {service.description}
                 </p>
 
+                {/* Features List */}
                 <ul className="space-y-4">
                   {service.features.map((feature, idx) => (
                     <li
@@ -174,6 +284,7 @@ const ServicesSection = () => {
                   ))}
                 </ul>
 
+                {/* Packages (if applicable) */}
                 {service.packages && (
                   <div className="space-y-6">
                     <h3 className="font-trajan text-2xl text-white">
@@ -212,6 +323,7 @@ const ServicesSection = () => {
                   </div>
                 )}
 
+                {/* Price Info (if applicable) */}
                 {service.priceInfo && (
                   <div className="bg-white/5 p-6 rounded-lg border border-gray-800">
                     <h3 className="font-trajan text-2xl text-white mb-4">
@@ -223,6 +335,7 @@ const ServicesSection = () => {
                   </div>
                 )}
 
+                {/* Pricing (if applicable, using colones format) */}
                 {service.pricing && (
                   <div className="bg-white/5 p-6 rounded-lg border border-gray-800">
                     <h3 className="font-trajan text-2xl text-white mb-4">
@@ -235,15 +348,40 @@ const ServicesSection = () => {
                         </span>
                       </div>
                     </div>
+
+                    {/* --- Added Bundle Offer Display --- */}
+                    {service.id === "premium-wash" &&
+                      service.pricing.bundle && (
+                        <div className="mt-4 pt-4 border-t border-primary-gold/20">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Star className="w-5 h-5 text-primary-gold" />
+                            <h4 className="font-trajan text-lg text-white">
+                              {service.pricing.bundle.title}
+                            </h4>
+                          </div>
+                          <div className="flex items-baseline justify-between">
+                            <span className="text-primary-gold text-2xl font-bold">
+                              {service.pricing.bundle.price}
+                            </span>
+                            <span className="text-green-400 font-semibold bg-green-500/10 px-2 py-1 rounded text-sm">
+                              {service.pricing.bundle.saving}
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                    {/* --- End Bundle Offer Display --- */}
                   </div>
                 )}
 
-                {service.showRestrictions && (
-                  <p className="text-gray-400 text-sm">
-                    * Precio sujeto a cambios.
+                {/* Restrictions Message */}
+                {service.restrictionsMessage && (
+                  <p className="text-gray-400 text-sm flex items-center gap-2">
+                    <Info className="w-4 h-4 flex-shrink-0" />
+                    <span>{service.restrictionsMessage}</span>
                   </p>
                 )}
 
+                {/* Coating Comparison (Specific to Ceramic Coating) */}
                 {service.id === "ceramic-coating" && (
                   <div className="mt-12">
                     <h3 className="font-trajan text-2xl text-white mb-6">
@@ -253,6 +391,7 @@ const ServicesSection = () => {
                   </div>
                 )}
 
+                {/* Financing Info */}
                 {service.showFinancing && (
                   <div className="flex items-center gap-4 bg-white/5 p-4 rounded-lg">
                     <CreditCard className="w-6 h-6 text-primary-gold" />
@@ -263,23 +402,29 @@ const ServicesSection = () => {
                   </div>
                 )}
 
+                {/* Action Button */}
                 <div className="flex gap-4">
-                  <Button
-                    className="bg-primary-gold text-black hover:bg-primary-gold/90"
-                    onClick={getButtonConfig(service.buttonType).onClick}
-                  >
-                    {getButtonConfig(service.buttonType).text}
-                  </Button>
+                  {service.buttonType === "schedule" ? (
+                    <Button
+                      className="bg-primary-gold text-black hover:bg-primary-gold/90 flex items-center gap-2"
+                      onClick={() => openCalendlyPopup(service.calendlyLink)}
+                    >
+                      <Calendar className="w-4 h-4" />
+                      Agendar Ahora
+                    </Button>
+                  ) : (
+                    <Button
+                      className="bg-primary-gold text-black hover:bg-primary-gold/90"
+                      onClick={() => {
+                        trackFbqEvent("Contact");
+                        window.open(SOCIAL_LINKS.whatsapp, "_blank");
+                      }}
+                    >
+                      Cotizar Ahora
+                    </Button>
+                  )}
                 </div>
               </div>
-
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
-                className="space-y-6"
-              ></motion.div>
             </motion.div>
           </Container>
         </div>

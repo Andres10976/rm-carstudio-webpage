@@ -21,6 +21,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <head>
+        {/* Font Links */}
         <link
           href="https://db.onlinewebfonts.com/c/c07d5c6528b6cc0eac08afd7a3199657?family=TrajanPro-Regular"
           rel="stylesheet"
@@ -37,7 +38,8 @@ export default function RootLayout({
           href="https://db.onlinewebfonts.com/c/70f9644542515286487b2b268beffbf8?family=Comfortaa+Bold+V2"
           rel="stylesheet"
         />
-        {/* Fixed Meta Pixel Implementation */}
+
+        {/* Meta Pixel Implementation */}
         <Script
           id="fb-pixel-base"
           strategy="afterInteractive"
@@ -64,12 +66,19 @@ export default function RootLayout({
              `,
           }}
         />
+
+        {/* --- ADDED: Calendly Widget Styles --- */}
+        <link
+          href="https://assets.calendly.com/assets/external/widget.css"
+          rel="stylesheet"
+        />
       </head>
       <body className="font-comfortaa">
         <NavbarProvider>
           {children}
           <WhatsAppBubble />
         </NavbarProvider>
+
         {/* No-script Fallback for Meta Pixel */}
         <noscript>
           <img
@@ -80,6 +89,12 @@ export default function RootLayout({
             alt="Facebook Pixel"
           />
         </noscript>
+
+        {/* --- ADDED: Calendly Widget Script --- */}
+        <Script
+          src="https://assets.calendly.com/assets/external/widget.js"
+          strategy="lazyOnload" // Load after page content
+        />
       </body>
     </html>
   );

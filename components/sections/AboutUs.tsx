@@ -101,6 +101,7 @@ const AboutSection = () => {
                 alt="RM Car Studio Team"
                 fill
                 className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
             </div>
@@ -122,6 +123,7 @@ const AboutSection = () => {
                     alt="Gtechniq Certified"
                     fill
                     className="object-contain"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 </div>
                 <div className="w-24 sm:w-32 h-12 sm:h-16 relative">
@@ -130,6 +132,7 @@ const AboutSection = () => {
                     alt="Stek Certified"
                     fill
                     className="object-contain"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 </div>
                 <div className="w-24 sm:w-32 h-12 sm:h-16 relative">

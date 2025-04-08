@@ -7,7 +7,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { NAV_ITEMS } from "@/lib/constants";
 import { Button } from "../ui/Button";
-import { SOCIAL_LINKS, CALENDLY_LINK } from "@/lib/constants";
+import { SOCIAL_LINKS } from "@/lib/constants";
 import { useNavbarContext } from "@/lib/navbar-context";
 import { trackFbqEvent } from "@/lib/utils";
 
@@ -34,8 +34,15 @@ export default function Navbar() {
     };
   }, [isOpen]);
 
-  const handleLinkClick = () => {
+  const handleLinkClick = (isScheduleButton = false) => {
     setIsOpen(false);
+    if (isScheduleButton) {
+      // Smooth scroll to the Calendly embed section
+      const element = document.getElementById("calendly-embed-section");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
   };
 
   return (
@@ -49,7 +56,11 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
             {/* Logo Section */}
-            <Link href="/" className="relative z-50 group">
+            <Link
+              href="/"
+              className="relative z-50 group"
+              onClick={() => handleLinkClick()}
+            >
               <div className="flex items-center">
                 <div className="relative w-16 h-16 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
                   <div className="absolute inset-0 bg-gray-100 rounded-full"></div>
@@ -80,19 +91,21 @@ export default function Navbar() {
                   key={item.name}
                   href={item.href}
                   className="font-trajan text-sm text-white hover:text-primary-gold transition-all duration-300 relative group"
+                  onClick={() => handleLinkClick()} // Close menu on link click
                 >
                   {item.name}
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-gold transition-all duration-300 group-hover:w-full" />
                 </Link>
               ))}
               <div className="flex items-center gap-4">
+                {/* Updated Agendar Button */}
                 <Button
                   size="sm"
                   variant="secondary"
                   className="hover:text-primary-gold transition-all duration-300"
                   onClick={() => {
                     trackFbqEvent("Schedule");
-                    window.open(CALENDLY_LINK, "_blank");
+                    handleLinkClick(true); // Pass true to indicate it's the schedule button
                   }}
                 >
                   Agendar
@@ -103,6 +116,7 @@ export default function Navbar() {
                   onClick={() => {
                     trackFbqEvent("Contact"); // <-- Track Contact (WhatsApp)
                     window.open(SOCIAL_LINKS.whatsapp, "_blank");
+                    handleLinkClick(); // Close menu if open
                   }}
                 >
                   Cotizar
@@ -144,7 +158,7 @@ export default function Navbar() {
                     >
                       <Link
                         href={item.href}
-                        onClick={handleLinkClick}
+                        onClick={() => handleLinkClick()} // Close menu on link click
                         className="block text-xl text-white hover:text-primary-gold transition-colors font-trajan text-center"
                       >
                         {item.name}
@@ -155,12 +169,12 @@ export default function Navbar() {
 
                 {/* Action Buttons */}
                 <div className="px-6 py-8 space-y-4 bg-black/90">
+                  {/* Updated Agendar Button */}
                   <Button
                     className="w-full bg-white/10 text-white hover:bg-white/20 py-4 text-lg"
                     onClick={() => {
                       trackFbqEvent("Schedule");
-                      window.open(CALENDLY_LINK, "_blank");
-                      handleLinkClick();
+                      handleLinkClick(true); // Pass true for schedule button
                     }}
                   >
                     Agendar
@@ -170,7 +184,7 @@ export default function Navbar() {
                     onClick={() => {
                       trackFbqEvent("Contact");
                       window.open(SOCIAL_LINKS.whatsapp, "_blank");
-                      handleLinkClick();
+                      handleLinkClick(); // Close menu
                     }}
                   >
                     Cotizar

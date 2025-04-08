@@ -43,7 +43,7 @@ const CoatingComparison = () => {
     },
     {
       name: "Resistencia a rayones",
-      ratings: [5, 4, 5],
+      ratings: [4, 4, 5],
     },
     {
       name: "Repelencia agua/suciedad",
