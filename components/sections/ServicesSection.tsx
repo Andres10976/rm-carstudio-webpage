@@ -21,14 +21,6 @@ import { SOCIAL_LINKS } from "@/lib/constants";
 import CoatingComparison from "./CoatingComparison";
 import { trackFbqEvent } from "@/lib/utils";
 
-declare global {
-  interface Window {
-    Calendly?: {
-      initPopupWidget: (options: { url: string }) => void;
-    };
-  }
-}
-
 interface ServicePricing {
   regular: string;
   bundle?: {
@@ -210,12 +202,17 @@ const ServicesSection = () => {
       return;
     }
 
-    if (window.Calendly) {
+    if (
+      window.Calendly &&
+      typeof window.Calendly.initPopupWidget === "function"
+    ) {
       trackFbqEvent("Schedule");
       const calendlyUrlWithParams = `${calendlyLink}?background_color=0a0a0a&text_color=ffffff&primary_color=f7d046&hide_event_type_details=1&hide_gdpr_banner=1`;
       window.Calendly.initPopupWidget({ url: calendlyUrlWithParams });
     } else {
-      console.error("Calendly script not loaded yet.");
+      console.error(
+        "Calendly script not loaded yet or initPopupWidget is missing."
+      );
       alert(
         "El sistema de agendamiento no está listo. Por favor, intente de nuevo en unos segundos o contáctenos directamente."
       );

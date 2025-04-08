@@ -24,14 +24,6 @@ import {
   CALENDLY_LINK, // Import CALENDLY_LINK
 } from "@/lib/constants";
 import { trackFbqEvent } from "@/lib/utils";
-declare global {
-  interface Window {
-    Calendly?: {
-      initInlineWidget: unknown;
-      initPopupWidget: (options: { url: string }) => void;
-    };
-  }
-}
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -108,19 +100,23 @@ const ContactSection = () => {
     }
   };
 
-  // --- ADDED: Function to open Calendly Popup ---
   const openCalendlyPopup = () => {
-    if (window.Calendly) {
-      trackFbqEvent("Schedule"); // Track the schedule event
-      // Construct the URL with styling parameters
+    if (
+      window.Calendly &&
+      typeof window.Calendly.initPopupWidget === "function"
+    ) {
+      trackFbqEvent("Schedule");
       const calendlyUrlWithParams = `${CALENDLY_LINK}?background_color=0a0a0a&text_color=ffffff&primary_color=f7d046&hide_event_type_details=1&hide_gdpr_banner=1`;
       window.Calendly.initPopupWidget({ url: calendlyUrlWithParams });
     } else {
-      console.error("Calendly script not loaded yet.");
-      // Optionally, show a message to the user or try loading the script again
+      console.error(
+        "Calendly script not loaded yet or initPopupWidget is missing."
+      );
+      alert(
+        "El sistema de agendamiento no está listo. Por favor, intente de nuevo en unos segundos o contáctenos directamente."
+      );
     }
   };
-  // --- END ADDED ---
 
   return (
     <section id="contact" className="relative py-24 bg-black overflow-hidden">
