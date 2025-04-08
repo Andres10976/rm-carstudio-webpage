@@ -404,7 +404,9 @@ const ServicesSection = () => {
                   {service.buttonType === "schedule" ? (
                     <Button
                       className="bg-primary-gold text-black hover:bg-primary-gold/90 flex items-center gap-2"
-                      onClick={() => openCalendlyPopup(service.calendlyLink)}
+                      onClick={() =>
+                        openCalendlyPopup(service.calendlyLink ?? null)
+                      }
                     >
                       <Calendar className="w-4 h-4" />
                       Agendar Ahora
