@@ -123,7 +123,6 @@ const ContactSection = () => {
   // --- END ADDED ---
 
   return (
-    // No need to return a Fragment (<>) anymore as CalendlyEmbed is removed
     <section id="contact" className="relative py-24 bg-black overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(247,208,70,0.05)_0%,rgba(0,0,0,0)_70%)]" />
 
