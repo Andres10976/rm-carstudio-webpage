@@ -6,9 +6,74 @@ import { WhatsAppBubble } from "@/components/ui/WhatsAppBubble";
 import { NavbarProvider } from "@/lib/navbar-context";
 
 export const metadata: Metadata = {
-  title: "RM Car Studio | Detallado Automotriz Profesional",
+  title: "RM Car Studio | Detallado Automotriz Profesional Costa Rica",
   description:
-    "Servicios profesionales de detallado automotriz, recubrimiento cerámico y protección de pintura en Costa Rica",
+    "Servicios profesionales de detallado automotriz, recubrimiento cerámico y protección de pintura en Costa Rica. Certificados Gtechniq, STEK y más. Protección premium para su vehículo.",
+  keywords: [
+    "detallado automotriz",
+    "recubrimiento cerámico",
+    "protección de pintura",
+    "car detailing Costa Rica",
+    "ceramic coating",
+    "paint protection film",
+    "gtechniq certified",
+    "stek certified",
+    "autodetailing profesional",
+  ],
+  authors: [{ name: "RM Car Studio" }],
+  creator: "RM Car Studio",
+  publisher: "RM Car Studio",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "es_CR",
+    url: "https://rmcarstudio.com",
+    siteName: "RM Car Studio",
+    title: "RM Car Studio | Detallado Automotriz Profesional Costa Rica",
+    description:
+      "Servicios profesionales de detallado automotriz, recubrimiento cerámico y protección de pintura en Costa Rica. Certificados Gtechniq, STEK y más.",
+    images: [
+      {
+        url: "/images/hero-image.png",
+        width: 1200,
+        height: 630,
+        alt: "RM Car Studio - Detallado Automotriz Profesional",
+      },
+      {
+        url: "/images/logo.png",
+        width: 400,
+        height: 400,
+        alt: "RM Car Studio Logo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "RM Car Studio | Detallado Automotriz Profesional Costa Rica",
+    description:
+      "Servicios profesionales de detallado automotriz, recubrimiento cerámico y protección de pintura en Costa Rica.",
+    images: ["/images/hero-image.png"],
+  },
+  verification: {
+    google: "qk2zvevGo0DLHAAUlisXwSjLCH7zn7GQs3uNd4E6_cc",
+  },
+  alternates: {
+    canonical: "https://rmcarstudio.com",
+    languages: {
+      "es-CR": "https://rmcarstudio.com",
+      es: "https://rmcarstudio.com",
+    },
+  },
 };
 
 export default function RootLayout({
@@ -71,6 +136,82 @@ export default function RootLayout({
         <link
           href="https://assets.calendly.com/assets/external/widget.css"
           rel="stylesheet"
+        />
+
+        {/* Structured Data - JSON-LD */}
+        <Script
+          id="structured-data"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              "@id": "https://rmcarstudio.com/#business",
+              name: "RM Car Studio",
+              description:
+                "Servicios profesionales de detallado automotriz, recubrimiento cerámico y protección de pintura en Costa Rica",
+              url: "https://rmcarstudio.com",
+              logo: "https://rmcarstudio.com/images/logo.png",
+              image: [
+                "https://rmcarstudio.com/images/hero-image.png",
+                "https://rmcarstudio.com/images/logo.png",
+              ],
+              telephone: "+506-7267-0164",
+              address: {
+                "@type": "PostalAddress",
+                addressCountry: "CR",
+                addressLocality: "Costa Rica",
+              },
+              geo: {
+                "@type": "GeoCoordinates",
+                latitude: "9.7489",
+                longitude: "-83.7534",
+              },
+              openingHours: "Mo-Sa 08:00-18:00",
+              priceRange: "$$",
+              serviceArea: {
+                "@type": "Country",
+                name: "Costa Rica",
+              },
+              hasOfferCatalog: {
+                "@type": "OfferCatalog",
+                name: "Servicios de Detallado Automotriz",
+                itemListElement: [
+                  {
+                    "@type": "Offer",
+                    itemOffered: {
+                      "@type": "Service",
+                      name: "Recubrimiento Cerámico",
+                      description:
+                        "Protección cerámica profesional para la pintura del vehículo",
+                    },
+                  },
+                  {
+                    "@type": "Offer",
+                    itemOffered: {
+                      "@type": "Service",
+                      name: "Detallado Premium",
+                      description:
+                        "Servicio completo de limpieza y detallado automotriz",
+                    },
+                  },
+                  {
+                    "@type": "Offer",
+                    itemOffered: {
+                      "@type": "Service",
+                      name: "Paint Protection Film",
+                      description:
+                        "Película de protección transparente para la pintura",
+                    },
+                  },
+                ],
+              },
+              sameAs: [
+                "https://www.instagram.com/rmcarstudio",
+                "https://www.facebook.com/rmcarstudio",
+              ],
+            }),
+          }}
         />
       </head>
       <body className="font-comfortaa">

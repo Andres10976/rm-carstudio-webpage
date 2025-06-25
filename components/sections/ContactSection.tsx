@@ -11,18 +11,11 @@ import {
   Loader2,
   CheckCircle2,
   AlertCircle,
-  Calendar, // Added Calendar icon
 } from "lucide-react";
 import { Container } from "../ui/Container";
 import { Button } from "../ui/Button";
 import { BrandIcon } from "../ui/BrandIcon";
-import {
-  PHONE_NUMBER,
-  EMAIL,
-  ADDRESS,
-  SOCIAL_LINKS,
-  CALENDLY_LINK, // Import CALENDLY_LINK
-} from "@/lib/constants";
+import { PHONE_NUMBER, EMAIL, ADDRESS, SOCIAL_LINKS } from "@/lib/constants";
 import { trackFbqEvent } from "@/lib/utils";
 
 const ContactSection = () => {
@@ -97,24 +90,6 @@ const ContactSection = () => {
       setTimeout(() => {
         setStatus({ type: "idle" });
       }, 5000);
-    }
-  };
-
-  const openCalendlyPopup = () => {
-    if (
-      window.Calendly &&
-      typeof window.Calendly.initPopupWidget === "function"
-    ) {
-      trackFbqEvent("Schedule");
-      const calendlyUrlWithParams = `${CALENDLY_LINK}?background_color=0a0a0a&text_color=ffffff&primary_color=f7d046&hide_event_type_details=1&hide_gdpr_banner=1`;
-      window.Calendly.initPopupWidget({ url: calendlyUrlWithParams });
-    } else {
-      console.error(
-        "Calendly script not loaded yet or initPopupWidget is missing."
-      );
-      alert(
-        "El sistema de agendamiento no está listo. Por favor, intente de nuevo en unos segundos o contáctenos directamente."
-      );
     }
   };
 
@@ -352,17 +327,6 @@ const ContactSection = () => {
               </div>
 
               {/* --- ADDED: Schedule Button --- */}
-              <div className="mt-8 mb-8">
-                {" "}
-                {/* Added margin top and bottom */}
-                <Button
-                  onClick={openCalendlyPopup}
-                  className="w-full bg-white/10 text-white hover:bg-white/20 group flex items-center justify-center"
-                  size="lg" // Make button larger
-                >
-                  <Calendar className="mr-2 h-5 w-5" /> Agendar una Cita
-                </Button>
-              </div>
               {/* --- END ADDED --- */}
 
               {/* Social Media Links */}

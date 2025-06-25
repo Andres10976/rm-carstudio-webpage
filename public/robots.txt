@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://rmcarstudio.com/sitemap.xml
+
+# Important pages
+Allow: /
+Allow: /images/
+Allow: /*.css
+Allow: /*.js
+
+# Block potentially sensitive files
+Disallow: /api/
+Disallow: /*.json
+Disallow: /admin/
+Disallow: /_next/static/
