@@ -104,6 +104,9 @@ export default function RootLayout({
           rel="stylesheet"
         />
 
+        {/* Color Scheme */}
+        <meta name="color-scheme" content="light" />
+
         {/* Meta Pixel Implementation */}
         <Script
           id="fb-pixel-base"
